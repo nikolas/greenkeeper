@@ -9,9 +9,9 @@ Jest's configuration is defined in the package.json file. Here are the [options]
       "/test/helpers/.*\\.js$"
     ],
     "collectCoverage": true,
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/nock"
-    ],
+    "setupFiles": [
+      "<rootDir>/test/helpers/setup-nock.js"
+     ],
     "testEnvironment": "node"
   },
 ```
@@ -21,14 +21,15 @@ Jest's configuration is defined in the package.json file. Here are the [options]
     is an Array of (regexp pattern strings) files in our test folder, we don't want to test (e.g. our helpers)
 - **collectCoverage**
     Jest can collect code coverage information from entire projects, including untested files. Easily create code coverage reports with `collectCoverage: true`
-- **unmockedModulePathPatterns**
-    An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them. If a module's path matches any of the patterns in this list, it will not be automatically mocked by the module loader.
 - **testEnvironment**
     The test environment that will be used for testing. The default environment in Jest is a browser-like environment through jsdom. We use the node option to use a node-like environment instead.
+- **setupFiles**
+    The paths to modules that run some code to configure or set up the testing environment **before each test**.   
+    Since every test runs in its own environment, these scripts will be executed in the testing environment immediately before executing the test code itself.
 - **globalSetup**
-    *not implemented yet* (This option allows the use of a custom global setup module which exports an async function that is triggered once before all test suites.)
+    *not implemented yet* (This option allows the use of a custom global setup module which exports an async function that is triggered **once before all test suites**.)
 - **globalTeardown**
-    *not implemented yet* (This option allows the use of a custom global teardown module which exports an async function that is triggered once after all test suites.)
+    *not implemented yet* (This option allows the use of a custom global teardown module which exports an async function that is triggered **once after all test suites**.)
 
 #### StandardJS
 To support standardjs in test files, we need this configuration:
